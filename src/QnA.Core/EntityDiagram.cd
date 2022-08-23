@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="QnA.Core.Domains.Questions.Question">
+    <Position X="3.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAgAAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Domains\Questions\Question.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QnA.Core.Domains.Answers.Answer">
+    <Position X="7.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACABAAAAAgAAAAAAAAAAAAgAAAAAAAAEAAAAAAQAAAA=</HashCode>
+      <FileName>Domains\Answers\Answer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QnA.Core.Domains.Votes.Vote">
+    <Position X="5.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AhABAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Domains\Votes\Vote.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QnA.Core.Domains.Users.User">
+    <Position X="5.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAA=</HashCode>
+      <FileName>Domains\Users\User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Left" Position="1.417" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

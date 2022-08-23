@@ -1,0 +1,116 @@
+﻿using Swashbuckle.AspNetCore.Annotations;
+
+namespace QnA.Demo.Controllers;
+
+[Authorize]
+[Route("api/[controller]")]
+[ApiController]
+public class QuestionsController : ControllerBase
+{
+    private readonly IMediator _mediator;
+
+    public QuestionsController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
+    {
+        var model = await _mediator.Send(new GetAllQuestions(), cancellationToken);
+        return Ok(model);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
+    {
+        var model = await _mediator.Send(new GetQuestionById()
+        {
+            QuestionId = id
+        }, cancellationToken);
+
+        if (model is null)
+            return NotFound();
+
+        return Ok(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Post(AddQuestionModel model, CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var saved = await _mediator.Send(new AddQuestion()
+        {
+            Content = model.Content,
+            UserId = GetUserId()
+        }, cancellationToken);
+
+        return CommandResult(saved);
+    }
+
+    [HttpPost("{id}/answers")]
+    public async Task<IActionResult> Post(int id, AddQuestionAnswerModel model, CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var saved = await _mediator.Send(new AddQuestionAnswer()
+        {
+            QuestionId = id,
+            Answer = model.Answer,
+            UserId = GetUserId()
+        }, cancellationToken);
+
+        return CommandResult(saved);
+    }
+
+    [HttpPost("{id}​/answers​/{answerId}​/votes")]
+    public async Task<IActionResult> Post(int id, int answerId, AddVoteModel model, CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var voteAdded = await _mediator.Send(new AddVote()
+        {
+            QuestionId = id,
+            AnswerId = answerId,
+            UserId = GetUserId(),
+            IsUpVote = model.IsUpVote
+        }, cancellationToken);
+
+        return CommandResult(voteAdded);
+    }
+
+    [HttpDelete("{id}/answers​/{answerId}")]
+    public async Task<IActionResult> Delete(int id, int answerId, CancellationToken cancellationToken)
+    {
+        var deleted = await _mediator.Send(new DeleteAsnswer()
+        {
+            QuestionId = id,
+            AsnswerId = answerId,
+            UserId = GetUserId()
+        }, cancellationToken);
+
+        return CommandResult(deleted);
+
+    }
+
+    #region Helpers
+    private int GetUserId()
+    {
+        return int.Parse(User.FindFirstValue(JwtClaimTypes.Id));
+    }
+
+    private IActionResult CommandResult(bool saved)
+    {
+        if (!saved)
+            return BadRequest();
+
+        return Ok();
+    }
+    #endregion
+}
