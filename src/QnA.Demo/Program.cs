@@ -1,4 +1,4 @@
-var builder = WebApplication.CreateBuilder(args);
+﻿var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 builder.Services.AddControllers();
@@ -31,16 +31,15 @@ builder.Services.AddApplicationServices(configuration);
 
 var app = builder.Build();
 
-
-
 // HTTP request pipeline.
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseMigration();
+app.UseDataSeeding();
 
 app.UseAuthentication();
 app.UseAuthorization();
