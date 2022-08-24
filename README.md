@@ -1,3 +1,3 @@
 # QnA
 
-Change Connection String And Run Migration Script QnA.Application\Data\Migrations\Script
+Run Docker Compose File `docker compose up` on root directory
