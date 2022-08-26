@@ -39,8 +39,8 @@ app.UseSwaggerUI();
 //app.UseHttpsRedirection();
 app.UseApplicationExceptionHandler();
 
-app.UseMigration();
-app.UseDataSeeding();
+await app.MigrateAsync();
+await app.SeedDataAsync();
 
 app.UseAuthentication();
 app.UseAuthorization();

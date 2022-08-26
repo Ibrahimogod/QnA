@@ -1,4 +1,4 @@
-﻿namespace Microsoft.AspNetCore.Builder;
+namespace Microsoft.AspNetCore.Builder;
 
 
 public static class DataSeedExtentions
@@ -92,4 +92,3 @@ public static class DataSeedExtentions
         return app;
     }
 }
-
