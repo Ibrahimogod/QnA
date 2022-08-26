@@ -1,14 +1,14 @@
-﻿namespace Microsoft.AspNetCore.Builder;
+namespace Microsoft.AspNetCore.Builder;
 
 public static class MigrationExtensions
 {
-    public static async Task<IApplicationBuilder> MigrateAsync(this IApplicationBuilder app)
+    public static IApplicationBuilder UseMigration(this IApplicationBuilder app)
     {
         using (var scope = app.ApplicationServices.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<QnADbContext>();
-            await db.Database.MigrateAsync();
-            await db.Database.EnsureCreatedAsync();
+            db.Database.Migrate();
+            db.Database.EnsureCreated();
         }
 
         return app;

@@ -8,10 +8,12 @@ namespace QnA.Demo.Controllers;
 public class QuestionsController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ILogger _logger;
 
-    public QuestionsController(IMediator mediator)
+    public QuestionsController(IMediator mediator,ILogger<QuestionsController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     [AllowAnonymous]
@@ -26,6 +28,8 @@ public class QuestionsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
     {
+        _logger.LogInformation("Get Question By Id", id);
+
         var model = await _mediator.Send(new GetQuestionById(id), cancellationToken);
 
         if (model is null)

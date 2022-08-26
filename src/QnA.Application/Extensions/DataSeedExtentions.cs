@@ -1,9 +1,9 @@
-﻿namespace Microsoft.AspNetCore.Builder;
+namespace Microsoft.AspNetCore.Builder;
 
 
 public static class DataSeedExtentions
 {
-    public static async Task<IApplicationBuilder> SeedDataAsync(this IApplicationBuilder app)
+    public static IApplicationBuilder UseDataSeeding(this IApplicationBuilder app)
     {
 
         using (var scope = app.ApplicationServices.CreateScope())
@@ -19,10 +19,10 @@ public static class DataSeedExtentions
                 var user3 = new User() { Email = "test3@gmail.com", UserName = "Thirdtestuser" };
                 var user4 = new User() { Email = "test4@gmail.com", UserName = "Fourthtestuser" };
 
-                await userManager.CreateAsync(user1, "Test1@QnA");
-                await userManager.CreateAsync(user2, "Test2@QnA");
-                await userManager.CreateAsync(user3, "Test3@QnA");
-                await userManager.CreateAsync(user4, "Test4@QnA");
+                userManager.CreateAsync(user1, "Test1@QnA").GetAwaiter().GetResult();
+                userManager.CreateAsync(user2, "Test2@QnA").GetAwaiter().GetResult();
+                userManager.CreateAsync(user3, "Test3@QnA").GetAwaiter().GetResult();
+                userManager.CreateAsync(user4, "Test4@QnA").GetAwaiter().GetResult();
 
                 #region Question1
                 var question1Answer1Vote1 = new Vote()
@@ -31,30 +31,29 @@ public static class DataSeedExtentions
                     UserId = user3.Id
                 };
 
-
                 var question1Answer1Vote2 = new Vote()
                 {
                     IsUpVote = false,
                     UserId = user4.Id
                 };
 
+
                 var question1Answer1 = new Answer()
                 {
                     Content = "Windows",
                     UserId = user2.Id,
-                    Votes = new[]{ question1Answer1Vote1, question1Answer1Vote2 }
+                    Votes = new[] { question1Answer1Vote1, question1Answer1Vote2 }
                 };
 
                 var question1 = new Question()
                 {
                     Content = "What OS do you Use?",
                     UserId = user1.Id,
-                    Answers = new[] {  question1Answer1 }
+                    Answers = new[] { question1Answer1 }
                 };
                 #endregion
 
                 #region Question2
-
                 var question2Answer1Vote1 = new Vote()
                 {
                     IsUpVote = true,
@@ -66,14 +65,11 @@ public static class DataSeedExtentions
                     IsUpVote = true,
                     UserId = user1.Id
                 };
-
-
-
                 var question2Answer1 = new Answer()
                 {
                     Content = "No I Prefare Docker",
                     UserId = user3.Id,
-                    Votes = new[] { question2Answer1Vote1,question2Answer1Vote2 }
+                    Votes = new[] { question2Answer1Vote1, question2Answer1Vote2 }
                 };
 
                 var question2 = new Question()
@@ -82,11 +78,13 @@ public static class DataSeedExtentions
                     UserId = user4.Id,
                     Answers = new[] { question2Answer1 }
                 };
+
+
                 #endregion
 
-                await db.Questions.AddRangeAsync(question1, question2);
-                await db.SaveChangesAsync();
-
+                db.Questions.AddRange(question1, question2);
+              
+                db.SaveChanges();
             }
         }
 
@@ -94,4 +92,3 @@ public static class DataSeedExtentions
         return app;
     }
 }
-

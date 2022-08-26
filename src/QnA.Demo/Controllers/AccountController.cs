@@ -5,10 +5,12 @@
 public class AccountController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly ILogger _logger;
 
-    public AccountController(IMediator mediator)
+    public AccountController(IMediator mediator, ILogger<AccountController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     [Route("Login")]
@@ -18,11 +20,14 @@ public class AccountController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var reponse = await _mediator.Send(new Login(model.Email,model.Password), cancellationToken);
+        _logger.LogInformation("User Login", model);
+
+        var reponse = await _mediator.Send(new Login(model.Email, model.Password), cancellationToken);
 
         if (reponse is null)
             return Unauthorized();
 
+        _logger.LogInformation("Success Login", reponse);
         return Ok(reponse);
     }
 
@@ -33,11 +38,16 @@ public class AccountController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _mediator.Send(new Register(model.Email,model.Username,model.Password), cancellationToken);
+        _logger.LogInformation("User Register", model);
+        var result = await _mediator.Send(new Register(model.Email, model.Username, model.Password), cancellationToken);
 
         if (!result.Succeeded)
+        {
+            _logger.LogInformation("Invalid User Register", result);
             return IdentityError(result.Errors);
+        }
 
+        _logger.LogInformation("Success User Register", result);
         return Ok();
     }
 
