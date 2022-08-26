@@ -37,6 +37,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 //app.UseHttpsRedirection();
+app.UseApplicationExceptionHandler();
 
 await app.MigrateAsync();
 await app.SeedDataAsync();
