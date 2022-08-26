@@ -2,9 +2,16 @@
 
 public class Register : IRequest<IdentityResult>
 {
-    public string Email { get; set; }
+    public Register(string email, string username, string password)
+    {
+        Email = email;
+        Username = username;
+        Password = password;
+    }
 
-    public string Username { get; set; }
+    public string Email { get; }
 
-    public string Password { get; set; }
+    public string Username { get; }
+
+    public string Password { get; }
 }

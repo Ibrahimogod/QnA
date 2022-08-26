@@ -26,10 +26,7 @@ public class QuestionsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
     {
-        var model = await _mediator.Send(new GetQuestionById()
-        {
-            QuestionId = id
-        }, cancellationToken);
+        var model = await _mediator.Send(new GetQuestionById(id), cancellationToken);
 
         if (model is null)
             return NotFound();
@@ -43,11 +40,7 @@ public class QuestionsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var saved = await _mediator.Send(new AddQuestion()
-        {
-            Content = model.Content,
-            UserId = GetUserId()
-        }, cancellationToken);
+        var saved = await _mediator.Send(new AddQuestion(model.Content, GetUserId()), cancellationToken);
 
         return CommandResult(saved);
     }
@@ -58,12 +51,7 @@ public class QuestionsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var saved = await _mediator.Send(new AddQuestionAnswer()
-        {
-            QuestionId = id,
-            Answer = model.Answer,
-            UserId = GetUserId()
-        }, cancellationToken);
+        var saved = await _mediator.Send(new AddQuestionAnswer(id, GetUserId(), model.Answer), cancellationToken);
 
         return CommandResult(saved);
     }
@@ -74,13 +62,7 @@ public class QuestionsController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var voteAdded = await _mediator.Send(new AddVote()
-        {
-            QuestionId = id,
-            AnswerId = answerId,
-            UserId = GetUserId(),
-            IsUpVote = model.IsUpVote
-        }, cancellationToken);
+        var voteAdded = await _mediator.Send(new AddVote(id, answerId, GetUserId(), model.IsUpVote), cancellationToken);
 
         return CommandResult(voteAdded);
     }
@@ -88,12 +70,7 @@ public class QuestionsController : ControllerBase
     [HttpDelete("{id}/answers​/{answerId}")]
     public async Task<IActionResult> Delete(int id, int answerId, CancellationToken cancellationToken)
     {
-        var deleted = await _mediator.Send(new DeleteAsnswer()
-        {
-            QuestionId = id,
-            AsnswerId = answerId,
-            UserId = GetUserId()
-        }, cancellationToken);
+        var deleted = await _mediator.Send(new DeleteAsnswer(answerId, id, GetUserId()), cancellationToken);
 
         return CommandResult(deleted);
 

@@ -1,6 +1,6 @@
 ﻿namespace QnA.Application.Data;
 
-public class BaseRepository<TEntity> : IDisposable, IAsyncDisposable, IRepository<TEntity> where TEntity : class, IEntity
+public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
 {
     #region Fields
     private readonly QnADbContext _qnaDbContext;
@@ -19,7 +19,7 @@ public class BaseRepository<TEntity> : IDisposable, IAsyncDisposable, IRepositor
     public Task DeleteAsync(TEntity entity)
     {
         Table.Remove(entity);
-       return Task.CompletedTask;
+        return Task.CompletedTask;
     }
 
     public Task DeleteAsync(IList<TEntity> entities)
@@ -36,20 +36,20 @@ public class BaseRepository<TEntity> : IDisposable, IAsyncDisposable, IRepositor
         return count;
     }
 
-    public async Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null)
+    public IQueryable<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null)
     {
-        var data = Table.AsQueryable().AsNoTracking();
+        var data = Table.AsQueryable();
         if (func is not null)
             data = func(data);
-        return await data.ToListAsync();
+        return data;
     }
 
-    public async Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null, CancellationToken cancellationToken = default)
+    public async Task<IQueryable<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null, CancellationToken cancellationToken = default)
     {
         var data = Table.AsQueryable().AsNoTracking();
         if (func is not null)
             data = await func(data);
-        return await data.ToListAsync(cancellationToken);
+        return data;
     }
 
     public async Task<TEntity> GetByIdAsync(int? id, CancellationToken cancellationToken = default)
@@ -57,9 +57,9 @@ public class BaseRepository<TEntity> : IDisposable, IAsyncDisposable, IRepositor
         return await Table.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
     }
 
-    public async Task<IList<TEntity>> GetByIdsAsync(IList<int> ids, CancellationToken cancellationToken = default)
+    public  IQueryable<TEntity> GetByIds(IList<int> ids, CancellationToken cancellationToken = default)
     {
-        return await Table.Where(e => ids.Contains(e.Id)).ToListAsync(cancellationToken);
+        return  Table.Where(e => ids.Contains(e.Id));
     }
 
     public async Task InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
@@ -86,16 +86,6 @@ public class BaseRepository<TEntity> : IDisposable, IAsyncDisposable, IRepositor
     public async Task<int> SaveAsync(CancellationToken cancellationToken = default)
     {
         return await _qnaDbContext.SaveChangesAsync(cancellationToken);
-    }
-
-    public void Dispose()
-    {
-        _qnaDbContext.SaveChanges();
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await _qnaDbContext.SaveChangesAsync();
     }
     #endregion
 }

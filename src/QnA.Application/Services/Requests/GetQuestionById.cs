@@ -2,5 +2,10 @@
 
 public class GetQuestionById : IRequest<QuestionModel>
 {
-    public int QuestionId { get; set; }
+    public GetQuestionById(int questionId)
+    {
+        QuestionId = questionId;
+    }
+
+    public int QuestionId { get; }
 }

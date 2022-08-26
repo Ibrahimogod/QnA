@@ -2,7 +2,13 @@
 
 public class AddQuestion : IRequest<bool>
 {
-    public string Content { get; set; }
+    public AddQuestion(string content, int userId)
+    {
+        Content = content;
+        UserId = userId;
+    }
 
-    public int UserId { get; set; }
+    public string Content { get; }
+
+    public int UserId { get;}
 }

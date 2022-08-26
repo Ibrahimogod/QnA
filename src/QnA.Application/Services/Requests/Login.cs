@@ -2,7 +2,13 @@
 
 public class Login : IRequest<AccessTokenResponse>
 {
-    public string Email { get; set; }
+    public Login(string email, string password)
+    {
+        Email = email;
+        Password = password;
+    }
 
-    public string Password { get; set; }
+    public string Email { get; }
+
+    public string Password { get; }
 }
