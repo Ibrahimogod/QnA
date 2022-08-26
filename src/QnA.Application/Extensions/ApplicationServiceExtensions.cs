@@ -7,6 +7,7 @@ public static class ApplicationServiceExtensions
         var dbConnnection = configuration.GetConnectionString("QnAConnection");
 
         // Add services to the container.
+        services.AddApplocationLogger();
         services.AddMemoryCache();
         services.AddMediatR(typeof(ApplicationServiceExtensions).Assembly);
 
