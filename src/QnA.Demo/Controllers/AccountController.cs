@@ -18,11 +18,7 @@ public class AccountController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var reponse = await _mediator.Send(new Login()
-        {
-            Email = model.Email,
-            Password = model.Password
-        }, cancellationToken);
+        var reponse = await _mediator.Send(new Login(model.Email,model.Password), cancellationToken);
 
         if (reponse is null)
             return Unauthorized();
@@ -37,12 +33,7 @@ public class AccountController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _mediator.Send(new Register()
-        {
-            Email = model.Email,
-            Username = model.Username,
-            Password = model.Password
-        }, cancellationToken);
+        var result = await _mediator.Send(new Register(model.Email,model.Username,model.Password), cancellationToken);
 
         if (!result.Succeeded)
             return IdentityError(result.Errors);

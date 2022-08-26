@@ -2,9 +2,16 @@
 
 public class DeleteAsnswer : IRequest<bool>
 {
-    public int AsnswerId { get; set; }
+    public DeleteAsnswer(int asnswerId, int questionId, int userId)
+    {
+        AsnswerId = asnswerId;
+        QuestionId = questionId;
+        UserId = userId;
+    }
 
-    public int QuestionId { get; set; }
+    public int AsnswerId { get; }
 
-    public int UserId { get; set; }
+    public int QuestionId { get;  }
+
+    public int UserId { get; }
 }

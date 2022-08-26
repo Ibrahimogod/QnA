@@ -28,8 +28,11 @@ global using QnA.Core.Domains.Answers;
 global using QnA.Core.Domains.Votes;
 global using QnA.Core.Domains.Users;
 
+global using QnA.Application.Common;
 global using QnA.Application.Data;
 global using QnA.Application.Data.Repositories;
 global using QnA.Application.Models;
 global using QnA.Application.Models.Options;
+global using QnA.Application.Services;
+
 

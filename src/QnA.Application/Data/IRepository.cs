@@ -23,7 +23,7 @@ public interface IRepository<TEntity> where TEntity : class, IEntity
     /// A task that represents the asynchronous operation
     /// The task result contains the entity entries
     /// </returns>
-    Task<IList<TEntity>> GetByIdsAsync(IList<int> ids, CancellationToken cancellationToken = default);
+    IQueryable<TEntity> GetByIds(IList<int> ids, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Get all entity entries
@@ -33,7 +33,7 @@ public interface IRepository<TEntity> where TEntity : class, IEntity
     /// A task that represents the asynchronous operation
     /// The task result contains the entity entries
     /// </returns>
-    Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null);
+    IQueryable<TEntity> GetAll(Func<IQueryable<TEntity>, IQueryable<TEntity>> func = null);
 
     /// <summary>
     /// Get all entity entries
@@ -43,7 +43,7 @@ public interface IRepository<TEntity> where TEntity : class, IEntity
     /// A task that represents the asynchronous operation
     /// The task result contains the entity entries
     /// </returns>
-    Task<IList<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null, CancellationToken cancellationToken = default);
+    Task<IQueryable<TEntity>> GetAllAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null, CancellationToken cancellationToken = default);
     /// <summary>
     /// Insert the entity entry
     /// </summary>

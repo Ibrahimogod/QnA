@@ -2,11 +2,19 @@
 
 public class AddVote : IRequest<bool>
 {
-    public int QuestionId { get; set; }
+    public AddVote(int questionId, int answerId, int userId, bool? isUpVote)
+    {
+        QuestionId = questionId;
+        AnswerId = answerId;
+        UserId = userId;
+        IsUpVote = isUpVote;
+    }
 
-    public int AnswerId { get; set; }
+    public int QuestionId { get; }
 
-    public int UserId { get; set; }
+    public int AnswerId { get; }
 
-    public bool? IsUpVote { get; set; }
+    public int UserId { get; }
+
+    public bool? IsUpVote { get;}
 }

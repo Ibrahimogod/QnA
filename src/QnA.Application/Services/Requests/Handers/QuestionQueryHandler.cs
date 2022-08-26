@@ -1,32 +1,17 @@
-﻿using QnA.Application.Common;
-
-namespace QnA.Application.Services.Requests.Handers;
+﻿namespace QnA.Application.Services.Requests.Handers;
 
 public class QuestionQueryHandler : IRequestHandler<GetQuestionById, QuestionModel>, IRequestHandler<GetAllQuestions, IEnumerable<QuestionOverviewModel>>
 {
+    private readonly IQuestionService _questionService;
 
-    private readonly IRepository<Question> _questionRepository;
-    private readonly IMemoryCache _memoryCache;
-
-    public QuestionQueryHandler(IRepository<Question> questionRepository, IMemoryCache memoryCache)
+    public QuestionQueryHandler(IQuestionService questionService)
     {
-        _questionRepository = questionRepository;
-        _memoryCache = memoryCache;
+        _questionService = questionService;
     }
 
     public async Task<QuestionModel> Handle(GetQuestionById request, CancellationToken cancellationToken)
     {
-        var question = await _memoryCache.GetOrCreateAsync(string.Format(CacheKeyHelpers.GET_QUESTION_BY_ID, request.QuestionId), async cacheEntry =>
-        {
-            CacheKeyHelpers.SetCacheEntry(cacheEntry);
-            return await _questionRepository.Table
-             .AsNoTracking()
-             .Include(q => q.Answers)
-             .ThenInclude(a => a.Votes)
-             .ThenInclude(v => v.User)
-             .Include(q => q.User)
-             .FirstOrDefaultAsync(q => q.Id == request.QuestionId);
-        });
+        var question = await _questionService.GetQuestionByIdAsync(request.QuestionId, cancellationToken);
 
         if (question is null)
             return null;
@@ -55,21 +40,16 @@ public class QuestionQueryHandler : IRequestHandler<GetQuestionById, QuestionMod
     
     private QuestionModel CalculateQuestionRank(QuestionModel model)
     {
-        var MaxUpVotes = model.Answers.Sum(a => a.UpvotesCount);
-        var AnswersCount = model.Answers.Count();
-        var CountOfDownVotedAnswers = model.Answers.Count(a => a.IsDownVoted);
-        model.Rank = (MaxUpVotes * AnswersCount) - CountOfDownVotedAnswers;
+        var maxUpVotes = model.Answers.Sum(a => a.UpvotesCount);
+        var answersCount = model.Answers.Count();
+        var countOfDownVotedAnswers = model.Answers.Count(a => a.IsDownVoted);
+        model.Rank = (maxUpVotes * answersCount) - countOfDownVotedAnswers;
         return model;
     }
 
     public async Task<IEnumerable<QuestionOverviewModel>> Handle(GetAllQuestions request, CancellationToken cancellationToken)
     {
-        var questions = _memoryCache.GetOrCreate(CacheKeyHelpers.GET_ALL_QUESTIONS, cacheEntry =>
-        {
-            CacheKeyHelpers.SetCacheEntry(cacheEntry);
-
-            return _questionRepository.Table.AsNoTracking();
-        });
+        var questions = await _questionService.GetQuestionsAsync();
 
         return await Task.FromResult(questions.Select(question => new QuestionOverviewModel()
         {
