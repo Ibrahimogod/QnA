@@ -5,7 +5,7 @@ public static class ScopedServiceExtensions
     public static IServiceCollection AddRequiredService(this IServiceCollection services)
     {
 
-        services.AddSingleton<IQuestionService, QuestionService>();
+        services.AddScoped<IQuestionService, QuestionService>();
 
         return services;
     }
