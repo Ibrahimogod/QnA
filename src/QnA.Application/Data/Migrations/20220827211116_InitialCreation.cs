@@ -230,6 +230,48 @@ namespace QnA.Application.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { 1, 0, "82dcc839-270d-4cdb-bf88-e10ede7f7c72", "test1@gmail.com", false, true, null, "TEST1@GMAIL.COM", "FIRSTTESTUSER", "AQAAAAEAACcQAAAAEOJAIav4yCyfFqnVcrIkzTjZvWpymnwhrVOMToAoeShcMw3pV2O6xDPsEvtZTAi5Hw==", null, false, "5NY533KA5J5NRFHUOR5MS3EPLIX2HC4O", false, "Firsttestuser" },
+                    { 2, 0, "63e8dc07-6388-4746-8e80-c0fd59bb93ca", "test2@gmail.com", false, true, null, "TEST2@GMAIL.COM", "SECONDTESTUSER", "AQAAAAEAACcQAAAAECckpVwefhV6DgSN2IzcMYLTcEJnd7qTYhdUAFgLVlrXrE+l6MVeVcbn8Zdw5TzgAQ==", null, false, "3JONSFU2FRIC6KJV4SWUQMEI5JU3TPHR", false, "Secondtestuser" },
+                    { 3, 0, "dbaa31ac-2a84-4c2b-9860-c2507d244eaf", "test3@gmail.com", false, true, null, "TEST3@GMAIL.COM", "THIRDTESTUSER", "AQAAAAEAACcQAAAAEOkAtjHCXG+MDv8WXm2XtNiJJs4lGf2ggXrP5mqEV0yV7dk35BcJumgFWp/5mLxI/w==", null, false, "J5J5PQXL6MQ3IUHEQ6Y726VGX2XU2G53", false, "Thirdtestuser" },
+                    { 4, 0, "c2d9829b-ae90-4e95-9808-b37d59418b39", "test4@gmail.com", false, true, null, "TEST4@GMAIL.COM", "FOURTHTEaSTUSER", "AQAAAAEAACcQAAAAELGQJ33UxMEk7eghhst33coZ6dkPPlHe+eDpLk1kcmwEw/yaRZ1JQRWFjTDW3GAdng==", null, false, "UZFG2HO3EBKOEXKST47PR2RNHKO7PKYV", false, "Fourthtestuser" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Questions",
+                columns: new[] { "Id", "Content", "UserId" },
+                values: new object[] { 1, "What OS do you Use?", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Questions",
+                columns: new[] { "Id", "Content", "UserId" },
+                values: new object[] { 2, "Can u use virtual machines?", 4 });
+
+            migrationBuilder.InsertData(
+                table: "Answers",
+                columns: new[] { "Id", "Content", "QuestionId", "UserId" },
+                values: new object[] { 1, "Windows", 1, 2 });
+
+            migrationBuilder.InsertData(
+                table: "Answers",
+                columns: new[] { "Id", "Content", "QuestionId", "UserId" },
+                values: new object[] { 2, "No I Prefare Docker", 2, 3 });
+
+            migrationBuilder.InsertData(
+                table: "Votes",
+                columns: new[] { "Id", "AnswerId", "IsUpVote", "UserId" },
+                values: new object[,]
+                {
+                    { 1, 1, true, 3 },
+                    { 2, 1, false, 4 },
+                    { 3, 2, true, 2 },
+                    { 4, 2, true, 1 }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Answers_QuestionId",
                 table: "Answers",

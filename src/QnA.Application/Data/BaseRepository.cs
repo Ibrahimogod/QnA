@@ -52,9 +52,9 @@ public class BaseRepository<TEntity> : IRepository<TEntity> where TEntity : clas
         return data;
     }
 
-    public async Task<TEntity> GetByIdAsync(int? id, CancellationToken cancellationToken = default)
+    public async Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken = default)
     {
-        return await Table.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+        return await Table.FindAsync(new object[] { id }, cancellationToken: cancellationToken);
     }
 
     public  IQueryable<TEntity> GetByIds(IList<int> ids, CancellationToken cancellationToken = default)

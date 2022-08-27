@@ -2,6 +2,11 @@
 
 public class QuestionModel
 {
+    public QuestionModel()
+    {
+        Answers = Enumerable.Empty<AnswerModel>();
+    }
+
     public int Id { get; set; }
 
     public string Content { get; set; }
