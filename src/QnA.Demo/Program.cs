@@ -36,15 +36,17 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-//app.UseHttpsRedirection();
 app.UseApplicationExceptionHandler();
 
 app.UseMigration();
-app.UseDataSeeding();
+
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseApplicationHealthChecks();
 
 app.Run();

@@ -1,5 +1,4 @@
-﻿
-namespace QnA.Application.Services;
+﻿namespace QnA.Application.Services;
 
 public class QuestionService : IQuestionService
 {

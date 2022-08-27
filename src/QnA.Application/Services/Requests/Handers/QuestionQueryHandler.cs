@@ -15,22 +15,23 @@ public class QuestionQueryHandler : IRequestHandler<GetQuestionById, QuestionMod
 
         if (question is null)
             return null;
+
         var model = new QuestionModel()
         {
             Id = question.Id,
             Content = question.Content,
             Username = question.User.UserName,
-            Answers = question.Answers.Select(answer => new AnswerModel()
+            Answers = question?.Answers?.Select(answer => new AnswerModel()
             {
                 Id = answer.Id,
                 Content = answer.Content,
-                Votes = answer.Votes.Select(vote => new VoteModel()
+                Votes = answer?.Votes?.Select(vote => new VoteModel()
                 {
                     Id = vote.Id,
                     IsUpVote = vote.IsUpVote
                 }),
-                UpvotesCount = answer.Votes.Where(vote => vote.IsUpVote).Count(),
-                IsDownVoted = answer.Votes.Where(vote => vote.IsUpVote).Count() < answer.Votes.Where(vote => !vote.IsUpVote).Count(),
+                UpvotesCount = answer.Votes.Count(vote => vote.IsUpVote),
+                IsDownVoted = answer.Votes?.Where(vote => vote.IsUpVote).Count() < answer.Votes.Where(vote => !vote.IsUpVote).Count(),
 
             }),
         };

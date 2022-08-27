@@ -2,6 +2,11 @@
 
 public class Answer : BaseEntity
 {
+    public Answer()
+    {
+        Votes = new HashSet<Vote>();
+    }
+
     public string Content { get; set; }
 
     public int QuestionId { get; set; }

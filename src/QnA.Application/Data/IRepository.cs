@@ -12,7 +12,7 @@ public interface IRepository<TEntity> where TEntity : class, IEntity
     /// A task that represents the asynchronous operation
     /// The task result contains the entity entry
     /// </returns>
-    Task<TEntity> GetByIdAsync(int? id, CancellationToken cancellationToken = default);
+    Task<TEntity> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 
 
     /// <summary>

@@ -12,7 +12,7 @@ using QnA.Application.Data;
 namespace QnA.Application.Data.Migrations
 {
     [DbContext(typeof(QnADbContext))]
-    [Migration("20220823203030_InitialCreation")]
+    [Migration("20220827211116_InitialCreation")]
     partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -151,6 +151,22 @@ namespace QnA.Application.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Answers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "Windows",
+                            QuestionId = 1,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "No I Prefare Docker",
+                            QuestionId = 2,
+                            UserId = 3
+                        });
                 });
 
             modelBuilder.Entity("QnA.Core.Domains.Questions.Question", b =>
@@ -172,6 +188,20 @@ namespace QnA.Application.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Questions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Content = "What OS do you Use?",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Content = "Can u use virtual machines?",
+                            UserId = 4
+                        });
                 });
 
             modelBuilder.Entity("QnA.Core.Domains.Users.User", b =>
@@ -240,6 +270,72 @@ namespace QnA.Application.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "82dcc839-270d-4cdb-bf88-e10ede7f7c72",
+                            Email = "test1@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "TEST1@GMAIL.COM",
+                            NormalizedUserName = "FIRSTTESTUSER",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOJAIav4yCyfFqnVcrIkzTjZvWpymnwhrVOMToAoeShcMw3pV2O6xDPsEvtZTAi5Hw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "5NY533KA5J5NRFHUOR5MS3EPLIX2HC4O",
+                            TwoFactorEnabled = false,
+                            UserName = "Firsttestuser"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "63e8dc07-6388-4746-8e80-c0fd59bb93ca",
+                            Email = "test2@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "TEST2@GMAIL.COM",
+                            NormalizedUserName = "SECONDTESTUSER",
+                            PasswordHash = "AQAAAAEAACcQAAAAECckpVwefhV6DgSN2IzcMYLTcEJnd7qTYhdUAFgLVlrXrE+l6MVeVcbn8Zdw5TzgAQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "3JONSFU2FRIC6KJV4SWUQMEI5JU3TPHR",
+                            TwoFactorEnabled = false,
+                            UserName = "Secondtestuser"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "dbaa31ac-2a84-4c2b-9860-c2507d244eaf",
+                            Email = "test3@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "TEST3@GMAIL.COM",
+                            NormalizedUserName = "THIRDTESTUSER",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOkAtjHCXG+MDv8WXm2XtNiJJs4lGf2ggXrP5mqEV0yV7dk35BcJumgFWp/5mLxI/w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "J5J5PQXL6MQ3IUHEQ6Y726VGX2XU2G53",
+                            TwoFactorEnabled = false,
+                            UserName = "Thirdtestuser"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c2d9829b-ae90-4e95-9808-b37d59418b39",
+                            Email = "test4@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = true,
+                            NormalizedEmail = "TEST4@GMAIL.COM",
+                            NormalizedUserName = "FOURTHTEaSTUSER",
+                            PasswordHash = "AQAAAAEAACcQAAAAELGQJ33UxMEk7eghhst33coZ6dkPPlHe+eDpLk1kcmwEw/yaRZ1JQRWFjTDW3GAdng==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "UZFG2HO3EBKOEXKST47PR2RNHKO7PKYV",
+                            TwoFactorEnabled = false,
+                            UserName = "Fourthtestuser"
+                        });
                 });
 
             modelBuilder.Entity("QnA.Core.Domains.Users.UserRole", b =>
@@ -296,6 +392,36 @@ namespace QnA.Application.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Votes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AnswerId = 1,
+                            IsUpVote = true,
+                            UserId = 3
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AnswerId = 1,
+                            IsUpVote = false,
+                            UserId = 4
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AnswerId = 2,
+                            IsUpVote = true,
+                            UserId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AnswerId = 2,
+                            IsUpVote = true,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -354,7 +480,7 @@ namespace QnA.Application.Data.Migrations
                     b.HasOne("QnA.Core.Domains.Questions.Question", "Question")
                         .WithMany("Answers")
                         .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("QnA.Core.Domains.Users.User", "User")
@@ -390,7 +516,7 @@ namespace QnA.Application.Data.Migrations
                     b.HasOne("QnA.Core.Domains.Users.User", "User")
                         .WithMany("Votes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Answer");

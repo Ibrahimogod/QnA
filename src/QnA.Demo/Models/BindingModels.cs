@@ -35,7 +35,7 @@ public class AddQuestionModel
 public class AddQuestionAnswerModel
 {
     [Required]
-    [MinLength(10)]
+    [MinLength(2)]
     public string Answer { get; set; }
 }
 

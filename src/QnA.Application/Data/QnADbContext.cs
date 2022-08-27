@@ -7,6 +7,12 @@ public class QnADbContext : IdentityDbContext<User,UserRole,int>
 	{
     }
 
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(typeof(QnADbContext).Assembly);
+    }
+
     public virtual DbSet<Question> Questions { get; set; }
 
     public virtual DbSet<Answer> Answers { get; set; }

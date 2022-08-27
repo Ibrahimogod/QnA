@@ -1,6 +1,4 @@
-﻿using Swashbuckle.AspNetCore.Annotations;
-
-namespace QnA.Demo.Controllers;
+﻿namespace QnA.Demo.Controllers;
 
 [Authorize]
 [Route("api/[controller]")]

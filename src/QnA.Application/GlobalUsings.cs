@@ -11,18 +11,22 @@ global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 global using Microsoft.Extensions.Logging;
 global using Microsoft.Extensions.Options;
 global using Microsoft.Extensions.Caching.Memory;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 global using Microsoft.IdentityModel.Tokens;
 
 global using IdentityModel;
 
 global using MediatR;
+
+global using HealthChecks.UI.Client;
 
 global using QnA.Core;
 global using QnA.Core.Domains.Questions;

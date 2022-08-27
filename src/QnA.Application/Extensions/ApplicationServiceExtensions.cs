@@ -17,6 +17,9 @@ public static class ApplicationServiceExtensions
         services.AddApplicationRepositories();
         services.AddRequiredService();
 
+        //Health Check
+        services.AddApplicationHealthChecks(dbConnnection);
+
         return services;
     }
 }
