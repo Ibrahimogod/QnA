@@ -42,3 +42,5 @@ all post requests require user to be authenticated.
 delete functoinality will not work if the answer not belong to the authenticated user
 
 user will not be able to vote his answers.
+
+goto <a>http://localhost:8000/health-monitor</a> to see health status and monitor down service
